@@ -1,0 +1,5 @@
+venv
+mlruns
+data
+gan_output
+mlflow.db
