@@ -1,25 +1,63 @@
-# .github/workflows/ml-pipeline.yml
+# # .github/workflows/ml-pipeline.yml
+# name: ML Model CI
+
+# on:
+#     push:
+#         branches: main
+#     pull_request:
+
+# jobs:
+#     validate-and-test:
+#         runs-on: ubuntu-latest
+#         steps:                
+#             - name: Set up Python
+#                 uses: actions/setup-python@v5
+#                 with:
+#                     python-version: '3.10'
+
+#             - name: Install Dependencies
+#                 run: pip install -r requirements.txt
+
+#             - name: Linter Check
+
+#             - name: Model Dry Test
+#                 run: |
+#                 python -c "import torch; print('Model environment ready!')"
+
+
 name: ML Model CI
 
 on:
-    push:
-        branches: main
-    pull_request:
+  push:
+    branches-ignore:
+      - main
+  pull_request:
 
 jobs:
-    validate-and-test:
-        runs-on: ubuntu-latest
-        steps:                
-            - name: Set up Python
-                uses: actions/setup-python@v5
-                with:
-                    python-version: '3.10'
+  validate-and-test:
+    runs-on: ubuntu-latest
 
-            - name: Install Dependencies
-                run: pip install -r requirements.txt
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-            - name: Linter Check
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
 
-            - name: Model Dry Test
-                run: |
-                python -c "import torch; print('Model environment ready!')"
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+
+      - name: Linter Check
+        run: echo "No linter configured"
+
+      - name: Model Dry Test
+        run: |
+          python -c "import torch; print('Model environment ready!')"
+
+      - name: Upload README Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: project-doc
+          path: README.md
