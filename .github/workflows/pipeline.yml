@@ -22,7 +22,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Pull dataset with DVC
-        run: dvc pull
+        run: dvc pull --force
 
       - name: Train and log model
         env:
