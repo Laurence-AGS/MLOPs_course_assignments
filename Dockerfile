@@ -24,5 +24,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # 5. Copy project files (INCLUDING mnist.csv)
 COPY . .
 
+RUN echo "Downloading model for RUN_ID=${RUN_ID}"
+
 # 6. Default command (aligned with train.py)
 CMD ["python", "train.py", "--csv-path", "mnist.csv"]
