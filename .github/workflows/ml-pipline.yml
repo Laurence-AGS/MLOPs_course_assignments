@@ -11,17 +11,17 @@
 # #         runs-on: ubuntu-latest
 # #         steps:                
 # #             - name: Set up Python
-# #                 uses: actions/setup-python@v5
-# #                 with:
-# #                     python-version: '3.10'
+# #               uses: actions/setup-python@v5
+# #               with:
+# #                 python-version: '3.10'
 
 # #             - name: Install Dependencies
-# #                 run: pip install -r requirements.txt
+# #               run: pip install -r requirements.txt
 
 # #             - name: Linter Check
 
 # #             - name: Model Dry Test
-# #                 run: |
+# #               run: |
 # #                 python -c "import torch; print('Model environment ready!')"
 
 
@@ -66,7 +66,7 @@ name: MLOps Pipeline
 
 on:
   push:
-    branches: [ orgin/test-ci ]
+    branches: [ test-ci ]
 
 jobs:
 
@@ -85,10 +85,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          pip install mlflow dvc
-
-      - name: Pull dataset with DVC
-        run: dvc pull
+          pip install mlflow
 
       - name: Train and log model
         env:
@@ -121,6 +118,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: model_info
+          path: .
 
       - name: Check model performance
         env:
@@ -128,4 +126,5 @@ jobs:
         run: python check_threshold.py
 
       - name: Mock Docker build
-        run: echo "Building Docker image for Run ID: $(cat model_info.txt)"
+        run: |
+          echo "Building Docker image for Run ID: $(cat model_info.txt)"
