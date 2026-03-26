@@ -27,7 +27,7 @@ jobs:
       - name: Train and log model
         env:
           MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
-        run: python train.py --csv-path mnist.csv --epochs 1
+        run: python train.py --csv-path mnist.csv --epochs 1 --lr 100
 
       - name: Upload model info
         uses: actions/upload-artifact@v4

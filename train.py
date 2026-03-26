@@ -251,9 +251,6 @@ def train(args):
         # -------------------------
         final_accuracy = last_d_accuracy
 
-        if final_accuracy < 0.85:
-            final_accuracy = 0.85 + (final_accuracy * 0.1)
-
         mlflow.log_metric("accuracy", final_accuracy)
 
         # save run id for GitHub Actions
