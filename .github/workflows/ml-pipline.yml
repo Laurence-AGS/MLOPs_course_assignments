@@ -96,6 +96,15 @@ jobs:
           name: model_info
           path: model_info.txt
 
+      - name: Upload MLflow tracking data
+        uses: actions/upload-artifact@v4
+        with:
+          name: mlflow_data
+          path: |
+            mlruns
+            mlflow.db
+          if-no-files-found: ignore
+
   deploy:
     needs: validate   
     runs-on: ubuntu-latest
@@ -116,6 +125,12 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: model_info
+          path: .
+
+      - name: Download MLflow tracking data
+        uses: actions/download-artifact@v4
+        with:
+          name: mlflow_data
           path: .
 
       - name: Check model performance
