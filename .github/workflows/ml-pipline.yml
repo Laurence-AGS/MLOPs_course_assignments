@@ -66,8 +66,7 @@ name: MLOps Pipeline
 
 on:
   push:
-    branches-ignore:  
-      -main 
+    branches: [ main ]
 
 jobs:
 
