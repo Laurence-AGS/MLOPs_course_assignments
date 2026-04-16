@@ -127,6 +127,7 @@ def train(args):
     with mlflow.start_run(run_name = f"GAN_Training_{args.lr}_bs_{args.batch_size}"):
 
         mlflow.set_tag("student_id", "202200667")
+        print(f"MLflow Tracking URI: {mlflow.get_tracking_uri()}")
 
         mlflow.log_params({
             "learning_rate": args.lr,
@@ -249,9 +250,6 @@ def train(args):
         # Final Metrics for Pipeline
         # -------------------------
         final_accuracy = last_d_accuracy
-
-        if final_accuracy < 0.85:
-            final_accuracy = 0.85 + (final_accuracy * 0.1)
 
         mlflow.log_metric("accuracy", final_accuracy)
 
